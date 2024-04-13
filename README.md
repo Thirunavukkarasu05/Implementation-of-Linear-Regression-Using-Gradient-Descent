@@ -8,10 +8,17 @@ To write a program to predict the profit of a city using the linear regression m
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+1.Import the necessary libraries.
+
+2.Define linear regression function.
+
+3.Begin by reading the dataset using the read_csv function.
+
+4.Apply the linear_regression function to the standardized input features X1_Scaled and target variable Y1_Scaled to obtain the optimal parameters theta.
+
+5.Prepare new data and make predictions using the trained model.
+
+6.Print the predicted value obtained from the regression analysis. 
 
 ## Program:
 ```
@@ -23,44 +30,48 @@ RegisterNumber: 212222040173
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-def linear_regression(X1,y,learning_rate=0.1,num_iters=1000):
-  X=np.c_[np.ones(len(X1)),X1]
-  theta=np.zeros(X.shape[1]).reshape(-1,1)
+def linear_regression(X1, y, learning_rate=0.01, num_iters=1000):
+    # Add a column of ones to X for the intercept term 
+  X = np.c_[np.ones(len(X1)), X1]
+  # Initialize theta with zeros
+  theta = np.zeros(X.shape[1]).reshape(-1,1)
   for _ in range(num_iters):
-#calculate predictions
-    predictions=(X).dot(theta).reshape(-1,1)
-#calculate errors
-    errors=(predictions-y).reshape(-1,1)
-#Update theta using gradient descent
-    theta-=learning_rate*(1/len(X1))*X.T.dot(errors)
-    return theta
-data=pd.read_csv("/content/50_Startups.csv")
-data.head()
-x=(data.iloc[1:,:-2].values)
-x1=x.astype(float)
-scaler=StandardScaler()
-y=(data.iloc[1:,-1].values).reshape(-1,1)
-x1_scaled=scaler.fit_transform(x1)
-y1_scaled=scaler.fit_transform(y)
-print(x)
-print(x1_scaled)
-theta=linear_regression(x1_scaled,y1_scaled)
-new_data=np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
-new_scaled=scaler.fit_transform(new_data)
-prediction=np.dot(np.append(1,new_scaled),theta)
+    predictions = (X).dot(theta).reshape(-1, 1)
+    errors = (predictions - y).reshape(-1,1)
+    theta -= learning_rate* (1 / len(X1)) * X.T.dot(errors)
+  return theta
+
+data = pd.read_csv('/content/50_startu.csv', header=None)
+print(data.head())
+# Assuming the last column is your target variable 'y' and the preceding column 
+X = (data.iloc[1:, :-2].values)
+print(X)
+X1=X.astype(float)
+scaler = StandardScaler()
+y = (data.iloc[1:,-1].values).reshape(-1,1)
+print(y)
+X1_Scaled = scaler.fit_transform(X1)
+Y1_Scaled = scaler.fit_transform(y)
+print(X1_Scaled)
+print(Y1_Scaled)
+theta = linear_regression(X1_Scaled, Y1_Scaled)
+
+# Predict target value for a new data point
+new_data = np.array([165349.2,136897.8,471784.1]).reshape(-1,1)
+new_Scaled = scaler.fit_transform(new_data)
+prediction = np.dot(np.append(1, new_Scaled), theta)
 prediction=prediction.reshape(-1,1)
 pre=scaler.inverse_transform(prediction)
-print(prediction)
-print(f"Predicted valeue: {pre}")
+print(f"Predicted value: {pre}")
 */
 ```
 
 ## Output:
-![Screenshot 2024-03-04 151026](https://github.com/Thirunavukkarasu05/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/119291645/df7fb3a6-ed23-4ba3-9ea5-46fd345f7169)
-![Screenshot 2024-03-04 151041](https://github.com/Thirunavukkarasu05/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/119291645/467aa730-2a2f-4dcb-a848-b557399eeb6e)
-![Screenshot 2024-03-04 151106](https://github.com/Thirunavukkarasu05/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/119291645/383e8329-52c7-4ff2-869c-1bbafd65a8c5)
+![11](https://github.com/Thirunavukkarasu05/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/119291645/19f18c54-a3ac-4d6c-9a49-c49cf936ddea)
 
+![22](https://github.com/Thirunavukkarasu05/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/119291645/afa8de6c-d3cf-4d59-ad76-3ddebd24b701)
 
+![33](https://github.com/Thirunavukkarasu05/Implementation-of-Linear-Regression-Using-Gradient-Descent/assets/119291645/da687eda-ecde-4475-b766-16860e25b428)
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
